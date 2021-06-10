@@ -172,7 +172,7 @@ export default class ThreadViewer extends React.Component<Props, State> {
         }
 
         if (this.props.isCollapsedThreadsEnabled) {
-            if (this.props.userThread == null) {
+            if (this.props.userThread == null || (this.getReplyCount() && Utils.getRootPost(this.props.posts)?.is_following)) {
                 this.fetchThread();
             } else {
                 this.markThreadRead();
@@ -204,14 +204,12 @@ export default class ThreadViewer extends React.Component<Props, State> {
             selected,
         } = this.props;
 
-        if (this.getReplyCount() && Utils.getRootPost(this.props.posts)?.is_following) {
-            getThread(
-                currentUserId,
-                currentTeamId,
-                selected.id,
-                true,
-            );
-        }
+        getThread(
+            currentUserId,
+            currentTeamId,
+            selected.id,
+            true,
+        );
     }
 
     markThreadRead() {
